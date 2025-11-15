@@ -8,7 +8,8 @@ import { breakpoints, useWindowSize } from '@openedx/paragon';
 
 import { AlertList } from '@src/generic/user-messages';
 import { useModel } from '@src/generic/model-store';
-import LearnerTools from './learner-tools/LearnerTools';
+import { getCoursewareOutlineSidebarSettings } from '../data/selectors';
+import { LearnerToolsSlot } from '../../plugin-slots/LearnerToolsSlot';
 import SidebarProvider from './sidebar/SidebarContextProvider';
 import NewSidebarProvider from './new-sidebar/SidebarContextProvider';
 import { NotificationsDiscussionsSidebarTriggerSlot } from '../../plugin-slots/NotificationsDiscussionsSidebarTriggerSlot';
@@ -89,7 +90,7 @@ const Course = ({
           unitId={unitId}
         />
         {shouldDisplayLearnerTools && (
-          <LearnerTools
+          <LearnerToolsSlot
             enrollmentMode={course.enrollmentMode}
             isStaff={isStaff}
             courseId={courseId}

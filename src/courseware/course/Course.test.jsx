@@ -25,11 +25,13 @@ jest.mock('@edx/frontend-lib-special-exams', () => {
 });
 const mockLearnerToolsTestId = 'fake-learner-tools';
 jest.mock(
-  './learner-tools/LearnerTools',
-  // eslint-disable-next-line react/prop-types
-  () => function ({ courseId }) {
-    return <div className="fake-learner-tools" data-testid={mockLearnerToolsTestId}>LearnerTools contents {courseId} </div>;
-  },
+  '../../plugin-slots/LearnerToolsSlot',
+  () => ({
+    // eslint-disable-next-line react/prop-types
+    LearnerToolsSlot({ courseId }) {
+      return <div className="fake-learner-tools" data-testid={mockLearnerToolsTestId}>LearnerTools contents {courseId} </div>;
+    },
+  }),
 );
 
 const recordFirstSectionCelebration = jest.fn();
@@ -368,7 +370,6 @@ describe('Course', () => {
 
   it('displays learner tools when screen is wide enough (browser)', async () => {
     const courseMetadata = Factory.build('courseMetadata', {
-      learning_assistant_enabled: true,
       enrollment: { mode: 'verified' },
     });
     const testStore = await initializeTestStore({ courseMetadata }, false);
@@ -388,7 +389,6 @@ describe('Course', () => {
   it('does not display learner tools when screen is too narrow (mobile)', async () => {
     global.innerWidth = breakpoints.extraSmall.minWidth;
     const courseMetadata = Factory.build('courseMetadata', {
-      learning_assistant_enabled: true,
       enrollment: { mode: 'verified' },
     });
     const testStore = await initializeTestStore({ courseMetadata }, false);

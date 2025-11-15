@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
 import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 
-const LearnerTools = ({
+export const LearnerToolsSlot = ({
   enrollmentMode = null,
   isStaff,
   courseId,
@@ -31,18 +31,17 @@ const LearnerTools = ({
   // Plugins will query their own requirements from Redux/config
   return createPortal(
     <PluginSlot
-      id="learner_tools_slot"
+      id="org.openedx.frontend.learning.learner_tools.v1"
+      idAliases={['learner_tools_slot']}
       pluginProps={pluginContext}
     />,
     document.body,
   );
 };
 
-LearnerTools.propTypes = {
+LearnerToolsSlot.propTypes = {
   isStaff: PropTypes.bool.isRequired,
   enrollmentMode: PropTypes.string,
   courseId: PropTypes.string.isRequired,
   unitId: PropTypes.string.isRequired,
 };
-
-export default LearnerTools;
